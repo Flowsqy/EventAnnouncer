@@ -15,26 +15,27 @@ import net.md_5.bungee.api.plugin.Plugin;
 public class TaskStarter {
 
     private final Plugin plugin;
-    private final InformationSequence sequence;
+    private final InformationsData[] sequence;
     private int current;
 
-    public TaskStarter(Plugin plugin, InformationSequence sequence) {
+    public TaskStarter(Plugin plugin, InformationsData[] sequence) {
         this.plugin = plugin;
         this.sequence = sequence;
         this.current = 0;
     }
 
     public void launchNext() {
-        if (current >= sequence.timings().length) {
+        if (current >= sequence.length) {
             return;
         }
 
-        final Consumer<ProxyServer> sendTask = getSendTask(sequence.informations()[current]);
+        final InformationsData informationsData = sequence[current];
+        final Consumer<ProxyServer> sendTask = getSendTask(informationsData);
 
         plugin.getProxy().getScheduler().schedule(
                 plugin,
                 new SendInformationsTask(sendTask, this::launchNext),
-                sequence.timings()[current], TimeUnit.MILLISECONDS);
+                informationsData.delay(), TimeUnit.MILLISECONDS);
 
         current++;
     }
