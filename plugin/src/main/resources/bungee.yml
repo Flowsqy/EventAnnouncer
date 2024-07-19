@@ -1,0 +1,4 @@
+name: "EventAnnouncer"
+version: "${version}"
+author: "Flowsqy"
+main: "fr.flowsqy.eventannouncer.EventAnnouncerPlugin"
