@@ -1,0 +1,6 @@
+prefix: "&7[&5StelyBroadcast&7]"
+
+command:
+  dont-have-permission: "%prefix% &cYou don't have the permission to do this command"
+  reload: "%prefix% &6The configuration have been reloaded successfully"
+
