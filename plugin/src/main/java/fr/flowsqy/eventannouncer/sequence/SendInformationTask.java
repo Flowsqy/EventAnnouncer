@@ -1,5 +1,6 @@
 package fr.flowsqy.eventannouncer.sequence;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.jetbrains.annotations.NotNull;
@@ -11,9 +12,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 public class SendInformationTask implements Consumer<ProxyServer> {
 
     private final String[] servers;
-    private final Consumer<ProxiedPlayer> sendTask;
+    private final BiConsumer<ProxyServer, ProxiedPlayer> sendTask;
 
-    public SendInformationTask(@NotNull String[] servers, @NotNull Consumer<ProxiedPlayer> sendTask) {
+    public SendInformationTask(@NotNull String[] servers, @NotNull BiConsumer<ProxyServer, ProxiedPlayer> sendTask) {
         this.servers = servers;
         this.sendTask = sendTask;
     }
@@ -26,7 +27,7 @@ public class SendInformationTask implements Consumer<ProxyServer> {
                 continue;
             }
             for (ProxiedPlayer player : serverInfo.getPlayers()) {
-                sendTask.accept(player);
+                sendTask.accept(proxyServer, player);
             }
         }
     }

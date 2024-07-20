@@ -43,17 +43,30 @@ public class TaskStarter {
     private Consumer<ProxyServer> getSendTask(@NotNull InformationsData informationsData) {
         Consumer<ProxyServer> sendTask = null;
         // Title
-        final InformationData<Title> titleData = informationsData.title();
+        final InformationData<TitleData> titleData = informationsData.title();
         if (titleData != null) {
             sendTask = new SendInformationTask(titleData.servers(),
-                    player -> player.sendTitle(titleData.information()));
+                    (proxy, player) -> {
+                        final TitleData data = titleData.information();
+                        final Title title = proxy.createTitle().reset()
+                                .stay(data.stay())
+                                .fadeIn(data.fadeIn())
+                                .fadeOut(data.fadeOut());
+                        if (data.title() != null) {
+                            title.title(data.title());
+                        }
+                        if (data.subTitle() != null) {
+                            title.subTitle(data.subTitle());
+                        }
+                        title.send(player);
+                    });
         }
 
         // ActionBar
         final InformationData<BaseComponent[]> actionBarData = informationsData.actionBar();
         if (actionBarData != null) {
             final Consumer<ProxyServer> nextTask = new SendInformationTask(actionBarData.servers(),
-                    player -> player.sendMessage(ChatMessageType.ACTION_BAR, actionBarData.information()));
+                    (s, player) -> player.sendMessage(ChatMessageType.ACTION_BAR, actionBarData.information()));
             sendTask = sendTask == null ? nextTask : sendTask.andThen(nextTask);
         }
 
@@ -61,7 +74,7 @@ public class TaskStarter {
         final InformationData<BaseComponent[]> messageData = informationsData.message();
         if (messageData != null) {
             final Consumer<ProxyServer> nextTask = new SendInformationTask(messageData.servers(),
-                    player -> player.sendMessage(ChatMessageType.SYSTEM, messageData.information()));
+                    (s, player) -> player.sendMessage(ChatMessageType.SYSTEM, messageData.information()));
             sendTask = sendTask == null ? nextTask : sendTask.andThen(nextTask);
         }
 
