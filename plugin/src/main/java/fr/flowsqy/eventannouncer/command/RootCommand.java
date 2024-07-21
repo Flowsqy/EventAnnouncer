@@ -40,6 +40,7 @@ public class RootCommand extends Command {
             }
             if (sender.hasPermission(subCommand.getPermission())) {
                 subCommand.getExecutor().execute(sender, args);
+                return;
             }
             break;
         }
