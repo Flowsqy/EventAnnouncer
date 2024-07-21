@@ -15,12 +15,13 @@ public class SendExecutor implements Executor {
 
     private final Plugin plugin;
     private final Map<String, InformationsData[]> sequences;
-    private final BaseComponent successMessage, failMessage;
+    private final BaseComponent helpMessage, successMessage, failMessage;
 
     public SendExecutor(@NotNull Plugin plugin, @NotNull Map<String, InformationsData[]> sequences,
-            @NotNull MessageConfig messageConfig) {
+            @NotNull MessageConfig messageConfig, @NotNull BaseComponent helpMessage) {
         this.plugin = plugin;
         this.sequences = sequences;
+        this.helpMessage = helpMessage;
         successMessage = messageConfig.getComponentMessage("command.send.success");
         failMessage = messageConfig.getComponentMessage("command.send.fail");
     }
@@ -28,7 +29,7 @@ public class SendExecutor implements Executor {
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
         if (args.length != 2) {
-            // TODO Send help
+            sender.sendMessage(helpMessage);
             return;
         }
         final String sequenceName = args[1];
