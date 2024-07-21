@@ -2,6 +2,10 @@ prefix: "&7[&5EventAnnouncer&7]"
 
 command:
   dont-have-permission: "%prefix% &cYou don't have the permission to do this command"
+  help:
+    help: "%prefix% &6/eventannouncer help"
+    reload: "%prefix% &6/eventannouncer reload"
+    send: "%prefix% &6/eventannouncer send <sequence>"
   reload: "%prefix% &6The configuration have been reloaded successfully"
   send:
     fail: "%prefix% &cThere is no sequence named &7%sequence%"

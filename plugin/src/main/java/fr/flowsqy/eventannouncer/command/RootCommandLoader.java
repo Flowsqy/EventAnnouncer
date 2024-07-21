@@ -18,6 +18,7 @@ public class RootCommandLoader {
         final ConfigLoader configLoader = new ConfigLoader();
         final MessageConfig messageConfig = new MessageConfig();
         messageConfig.load(configLoader, plugin, "messages.yml");
+        messageConfig.loadPrefix();
         final MessageRegistryLoader messageRegistryLoader = new MessageRegistryLoader();
         messageRegistryLoader.load(configLoader, plugin, "message-registry.lang");
         final SequenceConfig sequencesConfig = new SequenceConfig();
@@ -27,7 +28,8 @@ public class RootCommandLoader {
                 messageRegistry);
         final SubCommandLoader subCommandLoader = new SubCommandLoader();
         final SubCommand[] subCommands = subCommandLoader.load(plugin, messageConfig, rootCommand, sequences);
-        rootCommand.load(subCommands, messageConfig.getMessage("command.dont-have-permission"), subCommands[0].getExecutor());
+        rootCommand.load(subCommands, messageConfig.getMessage("command.dont-have-permission"),
+                subCommands[0].getExecutor());
     }
 
 }

@@ -23,12 +23,8 @@ public class EventAnnouncerPlugin extends Plugin {
             return;
         }
 
-        final MessageConfig messageConfig = new MessageConfig();
-        messageConfig.load(configLoader, this, "messages.yml");
-        messageConfig.loadPrefix();
-
         final CommandLoader commandLoader = new CommandLoader();
-        commandLoader.load(this, messageConfig);
+        commandLoader.load(this);
     }
 
 }
