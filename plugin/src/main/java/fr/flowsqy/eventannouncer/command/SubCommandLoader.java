@@ -22,7 +22,7 @@ public class SubCommandLoader {
                 messageConfig.getComponentMessage("command.help.help"), new HelpExecutor(subCommands));
         final BaseComponent sendHelpMessage = messageConfig.getComponentMessage("command.help.send");
         subCommands[1] = new SubCommand("send", new String[] { "s" }, "eventannouncer.command.send", sendHelpMessage,
-                new SendExecutor(plugin, sequences, messageConfig, sendHelpMessage));
+                new SendExecutor(plugin, sequences, messageConfig, sendHelpMessage), new SendTabCompleter(sequences));
         subCommands[2] = new SubCommand("reload", new String[] { "rl" }, "eventannouncer.command.reload",
                 messageConfig.getComponentMessage("command.help.reload"),
                 new ReloadExecutor(plugin, messageConfig, rootCommand));
