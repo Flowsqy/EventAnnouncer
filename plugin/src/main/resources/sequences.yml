@@ -1,0 +1,63 @@
+# Sequence configuration
+#
+# You can define as many sequence as you want
+# It should respect this format:
+#
+#<sequence-name>:
+#  <step-name>:
+#    delay: <delay>
+#    message:
+#      id: <message-id>
+#      servers: <servers>
+#    title:
+#      title: <title>
+#      subtitle: <subtitle>
+#      stay: <stay>
+#      fade-in: <fade-in>
+#      fade-out: <fade-out>
+#      servers: <servers>
+#    actionbar:
+#      id: <actionbar-id>
+#      servers: <servers>
+#
+# Where:
+# <sequence-name> is the name of the sequence
+# <step-name> is the name of the step. Note that this name is not used and only exist to differentiate each steps
+# <delay> is the delay between the previous step and this one in millisecond
+# <servers> is the list of servers where the information will be sent
+# <message-id> is the message that will be sent. It should be a valid id defined in message-registry.lang
+# <title> is the title that will be sent. It should be a valid id defined in message-registry.lang
+# <subtitle> is the subtitle that will be sent. It should be a valid id defined in message-registry.lang
+# <stay> is how long the title will stay in ticks. (1 second = 20 ticks)
+# <fade-in> is how long the title will fade in, in ticks
+# <fade-out> is how long the title will fade out, in ticks
+# <actionbar-id> is the action bar message that will be sent. It should be a valid id defined in message-registry.lang
+#
+#
+# For example, assuming example1, example2, example3 are valid id defined in message-registry.lang
+#
+#example:
+#  step1: 
+#    delay: 1000
+#    message:
+#      id: example1
+#      servers:
+#        - lobby
+#        - survival
+#    title:
+#      title: example2
+#      stay: 20
+#      servers:
+#        - lobby
+#  step2:
+#    delay: 3000
+#    actionbar:
+#      id: example3
+#      servers:
+#        - lobby
+#    message:
+#      id: example2
+#      servers:
+#        - skyblock
+#
+
