@@ -1,32 +1,43 @@
 package fr.flowsqy.eventannouncer.session;
 
-import java.util.Queue;
-import java.util.concurrent.TimeUnit;
-
 import org.jetbrains.annotations.NotNull;
 
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.api.scheduler.ScheduledTask;
 
 public class Session {
 
     private final Plugin plugin;
-    private final Queue<ProxiedPlayer> teleportQueue;
-    private ScheduledTask task = null;
+    private final SessionData sessionData;
+    private final TeleportDelayer teleportDelayer;
 
-    public void subscribe(@NotNull ProxiedPlayer player) {
-        teleportQueue.offer(player);
-        checkTask();
+    public Session(@NotNull Plugin plugin, @NotNull SessionData sessionData) {
+        this.plugin = plugin;
+        this.sessionData = sessionData;
+        teleportDelayer = new TeleportDelayer(plugin, sessionData.destinationServer(), sessionData.serverDownMessage(), sessionData.playerByIteration(), sessionData.period());
     }
-    
-    private void checkTask() {
-        if (task != null) {
+
+    public void requestTeleport(@NotNull ProxiedPlayer proxiedPlayer) {
+        final ServerInfo destinationServer = plugin.getProxy().getServerInfo(sessionData.destinationServer());
+        if (destinationServer == null) {
+            proxiedPlayer.sendMessage(sessionData.serverDownMessage());
             return;
         }
-        task = plugin.getProxy().getScheduler().schedule(plugin, () -> {
-            
-        }, delay, period, TimeUnit.MILLISECONDS);
-    }
+        if (!destinationServer.canAccess(proxiedPlayer)) {
+            proxiedPlayer.sendMessage(sessionData.cantConnectMessage());
+            return;
+        }
+        if (proxiedPlayer.getServer().getInfo().equals(destinationServer)) {
+            proxiedPlayer.sendMessage(sessionData.alearyConnectedMessage());
+            return;
+        }
+        if (teleportDelayer.isSubscribed(proxiedPlayer)) {
+            proxiedPlayer.sendMessage(sessionData.alreadyInQueueMessage());
+            return;
+        }
+        teleportDelayer.subscribe(proxiedPlayer);
+        proxiedPlayer.sendMessage(sessionData.successMessage());
+    }    
 
 }
