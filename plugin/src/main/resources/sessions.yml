@@ -1,0 +1,46 @@
+# Sessions configuration
+#
+# You can create has many session as you want.
+#
+# Each section should respect this format:
+#
+#<session-name>:
+#  destination: <destination>
+#  duration: <duration>
+#  player-by-iteration: <playerByIteration>
+#  period: <period>
+#  server-down: <serverDown>
+#  cant-connect: <cantConnect>
+#  already-connected: <alreadyConnected>
+#  already-in-queue: <alreadyInQueue>
+#  success: <success>
+#
+# Where:
+# <session-name> is the name of the session used in sequences.yml
+# <destination> is the name of the destination server
+# <duration> is the duration before this session closes itself in millisecond
+# <playerByIteration> is the number of player teleported each iteration of the queue
+# <period> is the duration between two iteration of the teleport task
+# <serverDown> is the message when the server is down
+# <cantConnect> is the message when the player can't connect to the server
+# <alreadyConnected> is the message when the player is already connected
+# <alreadyInQueue> is the message when the player is already in queue
+# <success> is the message when the player successfully join the teleport queue
+#
+# For example:
+#
+#example:
+#  destination: skyblock
+#  duration: 10000
+#  player-by-iteration: 5
+#  period: 100
+#  server-down: "&cThe server is down"
+#  cant-connect: "&cYou can't join this server"
+#  already-connected: "&cYou are already connected"
+#  already-in-queue: "&cYou are already in the queue to join the server"
+#  success: "&aYou will be teleported to the skyblock server"
+#
+#
+# This will create a session where the maximum amount of player teleported is 5 players every 100ms
+#
+
