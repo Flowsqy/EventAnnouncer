@@ -15,7 +15,8 @@ public class Session {
     public Session(@NotNull Plugin plugin, @NotNull SessionData sessionData) {
         this.plugin = plugin;
         this.sessionData = sessionData;
-        teleportDelayer = new TeleportDelayer(plugin, sessionData.destinationServer(), sessionData.serverDownMessage(), sessionData.playerByIteration(), sessionData.period());
+        teleportDelayer = new TeleportDelayer(plugin, sessionData.destinationServer(), sessionData.serverDownMessage(),
+                sessionData.playerByIteration(), sessionData.period());
     }
 
     public void requestTeleport(@NotNull ProxiedPlayer proxiedPlayer) {
@@ -38,6 +39,6 @@ public class Session {
         }
         teleportDelayer.subscribe(proxiedPlayer);
         proxiedPlayer.sendMessage(sessionData.successMessage());
-    }    
+    }
 
 }
