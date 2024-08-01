@@ -5,6 +5,7 @@
 #
 #<sequence-name>:
 #  <step-name>:
+#    start-session: <session-id>
 #    delay: <delay>
 #    message:
 #      id: <message-id>
@@ -23,6 +24,7 @@
 # Where:
 # <sequence-name> is the name of the sequence
 # <step-name> is the name of the step. Note that this name is not used and only exist to differentiate each steps
+# <session-id> is the session to start. It should be a valid id defined in sessions.yml
 # <delay> is the delay between the previous step and this one in millisecond
 # <servers> is the list of servers where the information will be sent
 # <message-id> is the message that will be sent. It should be a valid id defined in message-registry.lang
@@ -35,6 +37,7 @@
 #
 #
 # For example, assuming example1, example2, example3 are valid id defined in message-registry.lang
+# and example is defined in sessions.yml
 #
 #example:
 #  step1: 
@@ -50,6 +53,7 @@
 #      servers:
 #        - lobby
 #  step2:
+#    start-session: example
 #    delay: 3000
 #    actionbar:
 #      id: example3
