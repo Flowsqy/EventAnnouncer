@@ -26,7 +26,6 @@ public class SessionManager {
         lock = new ReentrantLock();
     }
 
-
     @Nullable
     public Session getSession(@NotNull String sessionName) {
         final ActiveSession session = activeSessions.get(sessionName);
@@ -46,7 +45,8 @@ public class SessionManager {
             }
             closeSession(sessionName);
             final Session session = new Session(plugin, sessionData);
-            final ScheduledTask task = plugin.getProxy().getScheduler().schedule(plugin, () -> closeSession(sessionName), sessionData.duration(), TimeUnit.MILLISECONDS);
+            final ScheduledTask task = plugin.getProxy().getScheduler().schedule(plugin,
+                    () -> closeSession(sessionName), sessionData.duration(), TimeUnit.MILLISECONDS);
             activeSessions.put(sessionName, new ActiveSession(session, task.getId()));
         } finally {
             lock.unlock();
@@ -67,6 +67,7 @@ public class SessionManager {
         }
     }
 
-    private static record ActiveSession (@NotNull Session session, int taskId) {}
+    private static record ActiveSession(@NotNull Session session, int taskId) {
+    }
 
 }

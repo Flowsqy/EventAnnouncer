@@ -48,7 +48,6 @@ public class SequenceConfig {
             sequences.put(key, informationSequence.get());
         }
         return sequences;
-
     }
 
     @NotNull

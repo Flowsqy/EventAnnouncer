@@ -30,7 +30,7 @@ public class Session {
             return;
         }
         if (proxiedPlayer.getServer().getInfo().equals(destinationServer)) {
-            proxiedPlayer.sendMessage(sessionData.alearyConnectedMessage());
+            proxiedPlayer.sendMessage(sessionData.alreadyConnectedMessage());
             return;
         }
         if (teleportDelayer.isSubscribed(proxiedPlayer)) {
