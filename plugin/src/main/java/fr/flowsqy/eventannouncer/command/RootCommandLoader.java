@@ -8,7 +8,9 @@ import fr.flowsqy.eventannouncer.config.ConfigLoader;
 import fr.flowsqy.eventannouncer.config.MessageConfig;
 import fr.flowsqy.eventannouncer.config.MessageRegistryLoader;
 import fr.flowsqy.eventannouncer.config.SequenceConfig;
+import fr.flowsqy.eventannouncer.config.SessionConfig;
 import fr.flowsqy.eventannouncer.sequence.InformationsData;
+import fr.flowsqy.eventannouncer.session.SessionData;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -24,8 +26,11 @@ public class RootCommandLoader {
         final SequenceConfig sequencesConfig = new SequenceConfig();
         sequencesConfig.load(configLoader, plugin, "sequences.yml");
         final Map<String, BaseComponent[]> messageRegistry = messageRegistryLoader.getMessages(plugin.getLogger());
+        final SessionConfig sessionConfig = new SessionConfig();
+        sessionConfig.load(configLoader, plugin, "sessions.yml");
+        final Map<String, SessionData> sessions = sessionConfig.loadSessions(plugin.getLogger());
         final Map<String, InformationsData[]> sequences = sequencesConfig.loadSequences(plugin.getLogger(),
-                messageRegistry);
+                messageRegistry, sessions.keySet());
         final SubCommandLoader subCommandLoader = new SubCommandLoader();
         final SubCommand[] subCommands = subCommandLoader.load(plugin, messageConfig, rootCommand, sequences);
         rootCommand.load(subCommands, messageConfig.getMessage("command.dont-have-permission"),
