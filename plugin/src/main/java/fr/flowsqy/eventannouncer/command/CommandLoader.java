@@ -15,7 +15,7 @@ public class CommandLoader {
         final RootCommand rootCommand = new RootCommand();
         pluginManager.registerCommand(plugin, rootCommand);
         final RootCommandLoader rootCommandLoader = new RootCommandLoader();
-        rootCommandLoader.load(plugin, pluginData, requestTeleportListener, rootCommand);
+        rootCommandLoader.load(plugin, pluginData, rootCommand, requestTeleportListener);
     }
 
 }
