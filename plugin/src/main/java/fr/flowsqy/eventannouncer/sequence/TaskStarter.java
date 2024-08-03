@@ -49,7 +49,9 @@ public class TaskStarter {
         // Session
         final String session = informationsData.session();
         if (session != null) {
-            sessionManager.startSession(session);
+            sendTask = p -> {
+                sessionManager.startSession(session);
+            };
         }
         // Title
         final InformationData<TitleData> titleData = informationsData.title();
