@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import fr.flowsqy.eventannouncer.config.MessageConfig;
 import fr.flowsqy.eventannouncer.sequence.InformationsData;
+import fr.flowsqy.eventannouncer.session.RequestTeleportListener;
 import fr.flowsqy.eventannouncer.session.SessionManager;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -14,7 +15,7 @@ public class SubCommandLoader {
 
     @NotNull
     public SubCommand[] load(@NotNull Plugin plugin, @NotNull MessageConfig messageConfig,
-            @NotNull RootCommand rootCommand,
+            @NotNull RootCommand rootCommand, @NotNull RequestTeleportListener requestTeleportListener,
             @NotNull Map<String, InformationsData[]> sequences, @NotNull SessionManager sessionManager) {
         // Order does not matter but help should be the first for development
         // consistency
@@ -27,7 +28,7 @@ public class SubCommandLoader {
                 new SendTabCompleter(sequences));
         subCommands[2] = new SubCommand("reload", new String[] { "rl" }, "eventannouncer.command.reload",
                 messageConfig.getComponentMessage("command.help.reload"),
-                new ReloadExecutor(plugin, messageConfig, rootCommand));
+                new ReloadExecutor(plugin, messageConfig, rootCommand, requestTeleportListener));
         return subCommands;
     }
 

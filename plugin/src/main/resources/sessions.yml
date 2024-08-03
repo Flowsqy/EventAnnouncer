@@ -1,6 +1,7 @@
 # Sessions configuration
 #
 # You can create has many session as you want.
+# It defines a time window where /ea tp <session-name> teleports you to the configured server
 #
 # Each section should respect this format:
 #
@@ -13,6 +14,7 @@
 #  cant-connect: <cantConnect>
 #  already-connected: <alreadyConnected>
 #  already-in-queue: <alreadyInQueue>
+#  not-opened: <notOpened>
 #  success: <success>
 #
 # Where:
@@ -21,10 +23,11 @@
 # <duration> is the duration before this session closes itself in millisecond
 # <playerByIteration> is the number of player teleported each iteration of the queue
 # <period> is the duration between two iteration of the teleport task
-# <serverDown> is the message when the server is down
-# <cantConnect> is the message when the player can't connect to the server
-# <alreadyConnected> is the message when the player is already connected
-# <alreadyInQueue> is the message when the player is already in queue
+# <serverDown> is the message sent when the server is down
+# <cantConnect> is the message sent when the player can't connect to the server
+# <alreadyConnected> is the message sent when the player is already connected
+# <alreadyInQueue> is the message sent when the player is already in queue
+# <notOpened> is the message sent when the session is not opened
 # <success> is the message when the player successfully join the teleport queue
 #
 # For example:
@@ -38,6 +41,7 @@
 #  cant-connect: "&cYou can't join this server"
 #  already-connected: "&cYou are already connected"
 #  already-in-queue: "&cYou are already in the queue to join the server"
+#  not-opened: "&cYou can't use the teleporter right now"
 #  success: "&aYou will be teleported to the skyblock server"
 #
 #

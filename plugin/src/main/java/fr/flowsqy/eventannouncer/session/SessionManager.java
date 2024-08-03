@@ -27,6 +27,11 @@ public class SessionManager {
     }
 
     @Nullable
+    public SessionData getData(@NotNull String sessionName) {
+        return registeredSession.get(sessionName);
+    }
+
+    @Nullable
     public Session getSession(@NotNull String sessionName) {
         final ActiveSession session = activeSessions.get(sessionName);
         return session == null ? null : session.session();

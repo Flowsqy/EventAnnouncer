@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import fr.flowsqy.eventannouncer.sequence.InformationData;
 import fr.flowsqy.eventannouncer.sequence.InformationsData;
 import fr.flowsqy.eventannouncer.sequence.TitleData;
+import fr.flowsqy.eventannouncer.session.SessionManager;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -38,11 +38,11 @@ public class SequenceConfig {
 
     @NotNull
     public Map<String, InformationsData[]> loadSequences(@NotNull Logger logger,
-            @NotNull Map<String, BaseComponent[]> messageRegistry, @NotNull Set<String> sessions) {
+            @NotNull Map<String, BaseComponent[]> messageRegistry, @NotNull SessionManager sessionManager) {
         final Map<String, InformationsData[]> sequences = new HashMap<>();
         for (String key : configuration.getKeys()) {
             final Optional<InformationsData[]> informationSequence = loadSequence(key, logger,
-                    messageRegistry, sessions);
+                    messageRegistry, sessionManager);
             if (informationSequence.isEmpty()) {
                 continue;
             }
@@ -55,7 +55,7 @@ public class SequenceConfig {
     private Optional<InformationsData[]> loadSequence(@NotNull String sequenceName,
             @NotNull Logger logger,
             @NotNull Map<String, BaseComponent[]> messageRegistry,
-            @NotNull Set<String> sessions) {
+            @NotNull SessionManager sessionManager) {
         final Configuration sequenceSection = configuration.getSection(sequenceName);
         if (sequenceSection == null) {
             logger.warning("'" + sequenceName + "' is not a section");
@@ -67,7 +67,7 @@ public class SequenceConfig {
             final Optional<InformationsData> informationsData = loadInformations(sequenceName,
                     sequenceSection, key,
                     logger,
-                    messageRegistry, sessions);
+                    messageRegistry, sessionManager);
             if (informationsData.isEmpty()) {
                 continue;
             }
@@ -83,7 +83,7 @@ public class SequenceConfig {
     @NotNull
     private Optional<InformationsData> loadInformations(@NotNull String sequenceName,
             @NotNull Configuration sequenceSection, @NotNull String key, @NotNull Logger logger,
-            @NotNull Map<String, BaseComponent[]> messageRegistry, @NotNull Set<String> sessions) {
+            @NotNull Map<String, BaseComponent[]> messageRegistry, @NotNull SessionManager sessionManager) {
         final Configuration informationsSection = sequenceSection.getSection(key);
 
         if (informationsSection == null) {
@@ -98,7 +98,7 @@ public class SequenceConfig {
         }
         final String informationsPath = sequenceName + "." + key;
         String session = informationsSection.getString("start-session", null);
-        if (session != null && !sessions.contains(session)) {
+        if (session != null && !sessionManager.isSession(session)) {
             logger.warning("Invalid session name in " + informationsPath);
             session = null;
         }

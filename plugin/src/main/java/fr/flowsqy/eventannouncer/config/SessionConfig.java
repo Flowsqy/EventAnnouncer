@@ -69,10 +69,12 @@ public class SessionConfig {
                 ChatColor.translateAlternateColorCodes('&', sessionSection.getString("already-connected", "")));
         final BaseComponent alreadyInQueueMessage = TextComponent.fromLegacy(
                 ChatColor.translateAlternateColorCodes('&', sessionSection.getString("already-in-queue", "")));
+        final BaseComponent notOpenedMessage = TextComponent
+                .fromLegacy(ChatColor.translateAlternateColorCodes('&', sessionSection.getString("not-opened", "")));
         final BaseComponent successMessage = TextComponent
                 .fromLegacy(ChatColor.translateAlternateColorCodes('&', sessionSection.getString("success", "")));
         final SessionData sessionData = new SessionData(destination, duration, playerByIteration, period,
-                serverDownMessage, cantConnectMessage, alreadyConnectedMessage, alreadyInQueueMessage, successMessage);
+                serverDownMessage, cantConnectMessage, alreadyConnectedMessage, alreadyInQueueMessage, notOpenedMessage, successMessage);
         return Optional.of(sessionData);
     }
 }
