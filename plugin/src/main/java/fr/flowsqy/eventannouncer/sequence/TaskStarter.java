@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import org.jetbrains.annotations.NotNull;
 
+import fr.flowsqy.eventannouncer.session.SessionManager;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.Title;
@@ -16,11 +17,14 @@ public class TaskStarter {
 
     private final Plugin plugin;
     private final InformationsData[] sequence;
+    private final SessionManager sessionManager;
     private int current;
 
-    public TaskStarter(Plugin plugin, InformationsData[] sequence) {
+    public TaskStarter(@NotNull Plugin plugin, @NotNull InformationsData[] sequence,
+            @NotNull SessionManager sessionManager) {
         this.plugin = plugin;
         this.sequence = sequence;
+        this.sessionManager = sessionManager;
         this.current = 0;
     }
 
@@ -42,10 +46,15 @@ public class TaskStarter {
 
     private Consumer<ProxyServer> getSendTask(@NotNull InformationsData informationsData) {
         Consumer<ProxyServer> sendTask = null;
+        // Session
+        final String session = informationsData.session();
+        if (session != null) {
+            sessionManager.startSession(session);
+        }
         // Title
         final InformationData<TitleData> titleData = informationsData.title();
         if (titleData != null) {
-            sendTask = new SendInformationTask(titleData.servers(),
+            final Consumer<ProxyServer> nextTask = new SendInformationTask(titleData.servers(),
                     (proxy, player) -> {
                         final TitleData data = titleData.information();
                         final Title title = proxy.createTitle().reset()
@@ -60,6 +69,7 @@ public class TaskStarter {
                         }
                         title.send(player);
                     });
+            sendTask = sendTask == null ? nextTask : sendTask.andThen(nextTask);
         }
 
         // ActionBar

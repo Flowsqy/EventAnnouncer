@@ -47,7 +47,13 @@ public class MessageRegistryLoader {
             }
             final String id = parts[0];
             final String rawComponent = parts[1];
-            final BaseComponent[] components = ComponentSerializer.parse(rawComponent);
+            final BaseComponent[] components;
+            try {
+                components = ComponentSerializer.parse(rawComponent);
+            } catch (Exception e) {
+                logger.warning("Invalid json value for the id '" + id + "'");
+                continue;
+            }
             registry.put(id, components);
         }
         return registry;

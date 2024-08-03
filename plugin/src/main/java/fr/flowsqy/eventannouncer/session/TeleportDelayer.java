@@ -20,13 +20,13 @@ public class TeleportDelayer {
     private final Plugin plugin;
     private final String destinationServerName;
     private final Queue<ProxiedPlayer> queue;
-    private final BaseComponent[] serverDownMessage;
+    private final BaseComponent serverDownMessage;
     private final int playerByIteration, period;
     private final Lock lock;
     private ScheduledTask teleportTask;
 
     public TeleportDelayer(@NotNull Plugin plugin, @NotNull String destinationServerName,
-            @NotNull BaseComponent[] serverDownMessage, int playerByIteration,
+            @NotNull BaseComponent serverDownMessage, int playerByIteration,
             int period) {
         this.plugin = plugin;
         this.destinationServerName = destinationServerName;
