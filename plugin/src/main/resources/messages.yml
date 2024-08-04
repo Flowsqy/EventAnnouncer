@@ -6,7 +6,9 @@ command:
     help: "%prefix% &6/eventannouncer help"
     reload: "%prefix% &6/eventannouncer reload"
     send: "%prefix% &6/eventannouncer send <sequence>"
-  reload: "%prefix% &6The configuration have been reloaded successfully"
+  reload:
+    fail: "%prefix% &cThe configuration could not be reloaded. Check the console."
+    success: "%prefix% &6The configuration have been reloaded successfully"
   send:
     fail: "%prefix% &cThere is no sequence named &7%sequence%"
     success: "%prefix% &6Sending the sequence &a%sequence%"
