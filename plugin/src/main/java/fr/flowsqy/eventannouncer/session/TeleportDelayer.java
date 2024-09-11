@@ -12,6 +12,7 @@ import net.md_5.bungee.api.ServerConnectRequest;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
 
@@ -80,6 +81,7 @@ public class TeleportDelayer {
                 final ServerConnectRequest connectRequest = destinationServer == null ? null
                         : ServerConnectRequest.builder()
                                 .target(destinationServer)
+                                .reason(ServerConnectEvent.Reason.PLUGIN)
                                 .build();
                 for (int i = 0; i < playerByIteration && !queue.isEmpty(); i++) {
                     final ProxiedPlayer player = queue.poll();
