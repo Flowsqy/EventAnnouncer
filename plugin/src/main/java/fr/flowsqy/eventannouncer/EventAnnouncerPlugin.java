@@ -16,6 +16,7 @@ public class EventAnnouncerPlugin extends Plugin {
             return;
         }
         final RequestTeleportListener requestTeleportListener = new RequestTeleportListener();
+        getProxy().getPluginManager().registerListener(this, requestTeleportListener);
         requestTeleportListener.load(pluginData.sessionManager());
         final CommandLoader commandLoader = new CommandLoader();
         commandLoader.load(this, pluginData, requestTeleportListener);
